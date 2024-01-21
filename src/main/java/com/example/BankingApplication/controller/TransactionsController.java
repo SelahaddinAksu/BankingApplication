@@ -38,7 +38,7 @@ public class TransactionsController {
         System.out.println("test başarılı");
     }
 
-        @PutMapping("/depositMoney/{accountId}/{transactionAmount}")
+    @PutMapping("/depositMoney/{accountId}/{transactionAmount}")
     public void depositMoney(@PathVariable("accountId") int accountId, @PathVariable("transactionAmount") Double transactionAmount) throws Exception {
 
         AccountEntity account = accountService.getAccountById(accountId);
@@ -69,7 +69,7 @@ public class TransactionsController {
     public void withdrawMoney(@PathVariable("accountId") int accountId, @PathVariable("transactionAmount") Double transactionAmount) {
 
         AccountEntity account = accountService.getAccountById(accountId);
-        TransactionLogEntity transactionLog = transactionLogService.getTransactionLogAccountId(accountId);
+        TransactionLogEntity transactionLog = new TransactionLogEntity();
 
         if (account != null) {
             if (transactionAmount >= 0) {
@@ -102,7 +102,7 @@ public class TransactionsController {
     }
 
     @GetMapping("/history/{id}")
-    public List<TransactionLogEntity> history(@PathVariable int id) {
+    public List<TransactionLogEntity> history(@PathVariable Integer id) {
         return transactionLogService.getHistoryLog(id);
     }
 

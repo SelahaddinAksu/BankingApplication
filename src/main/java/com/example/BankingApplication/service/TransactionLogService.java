@@ -28,7 +28,7 @@ public class TransactionLogService {
         return transactionLogRepository.findByAccountId(id);
     }
 
-    public List<TransactionLogEntity> getHistoryLog(int id) {
+    public List<TransactionLogEntity> getHistoryLog(Integer id) {
         return transactionLogRepository.findTransactionLogByAccountId(id);
     }
 
