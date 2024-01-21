@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Bank")
+@RequestMapping("/bank")
 public class BankController {
 
     @Autowired
@@ -19,7 +19,7 @@ public class BankController {
         return bankService.getAllBank();
     }
 
-    @GetMapping("/Get/{id}")
+    @GetMapping("/get/{id}")
     public BankEntity getBankById(@PathVariable Integer id) {
         return bankService.getBankById(id);
     }
@@ -29,7 +29,7 @@ public class BankController {
         bankService.addBank(bank);
     }
 
-    @PutMapping("/Update/{id}")
+    @PutMapping("/update/{id}")
     public void updateBank(@PathVariable Integer id, @RequestBody BankEntity bank) {
         BankEntity existing= bankService.getBankById(id);
         if (existing != null) {
@@ -39,7 +39,7 @@ public class BankController {
         }
     }
 
-    @DeleteMapping("/Delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteBank(@PathVariable Integer id) {
         bankService.deleteBank(id);
     }
