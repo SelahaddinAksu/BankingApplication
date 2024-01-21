@@ -2,6 +2,7 @@ package com.example.BankingApplication.service;
 
 import com.example.BankingApplication.model.TransactionTypeEntity;
 import com.example.BankingApplication.repository.TransactionTypeRepository;
+import com.fasterxml.jackson.databind.annotation.EnumNaming;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

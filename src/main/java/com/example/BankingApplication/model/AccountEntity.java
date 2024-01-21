@@ -7,19 +7,19 @@ import java.util.Objects;
 @Entity
 @Table(name = "account", schema = "public", catalog = "postgres")
 public class AccountEntity {
-    private long id;
+    private int id;
     private String accountHolder;
-    private long bankId;
+    private int bankId;
     private Double totalAmount;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -35,11 +35,11 @@ public class AccountEntity {
 
     @Basic
     @Column(name = "bank_id", nullable = false)
-    public long getBankId() {
+    public int getBankId() {
         return bankId;
     }
 
-    public void setBankId(long bankId) {
+    public void setBankId(int bankId) {
         this.bankId = bankId;
     }
 

@@ -34,7 +34,6 @@ public class TransactionTypeController {
     public void updateTransactionType(@PathVariable Integer id, @RequestBody TransactionTypeEntity transactionType) {
         TransactionTypeEntity existing= transactionTypeService.getTransactionTypeById(id);
         if (existing != null) {
-            existing.setId(transactionType.getId());
             existing.setTransactionType(transactionType.getTransactionType());
             transactionTypeService.updateTransactionType(existing);
         }

@@ -33,7 +33,6 @@ public class BankController {
     public void updateBank(@PathVariable Integer id, @RequestBody BankEntity bank) {
         BankEntity existing= bankService.getBankById(id);
         if (existing != null) {
-            existing.setId(bank.getId());
             existing.setBankName(bank.getBankName());
             bankService.updateBank(existing);
         }

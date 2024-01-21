@@ -36,7 +36,6 @@ public class TransactionLogService {
         return transactionLogRepository.findAll();
     }
 
-
     @Transactional
     public void updateTotalAmount(AccountEntity totalAmount) {
         accountRepository.save(totalAmount);
