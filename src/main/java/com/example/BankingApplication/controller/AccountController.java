@@ -22,7 +22,7 @@ public class AccountController {
     }
 
     @GetMapping("/get/{id}")
-    public AccountEntity getAccountById(@PathVariable AccountEntity id) {
+    public AccountEntity getAccountById(@PathVariable int id) {
         return accountService.getAccountById(id);
     }
 
@@ -32,7 +32,7 @@ public class AccountController {
     }
 
     @PutMapping("/update/{id}")
-    public void updateAccount(@PathVariable AccountEntity id, @RequestBody AccountEntity account) {
+    public void updateAccount(@PathVariable int id, @RequestBody AccountEntity account) {
         AccountEntity existing= accountService.getAccountById(id);
         if (existing != null) {
             existing.setAccountHolder(account.getAccountHolder());

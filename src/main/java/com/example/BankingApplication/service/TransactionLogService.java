@@ -24,11 +24,11 @@ public class TransactionLogService {
         transactionLogRepository.save(transactionLog);
     }
 
-    public TransactionLogEntity getTransactionLogAccounId(AccountEntity id) {
+    public TransactionLogEntity getTransactionLogAccountId(int id) {
         return transactionLogRepository.findByAccountId(id);
     }
 
-    public List<TransactionLogEntity> getHistoryLog(AccountEntity id) {
+    public List<TransactionLogEntity> getHistoryLog(int id) {
         return transactionLogRepository.findTransactionLogByAccountId(id);
     }
 
@@ -41,8 +41,8 @@ public class TransactionLogService {
         accountRepository.save(totalAmount);
     }
 
-    public AccountEntity getAmount(AccountEntity id) {
-        return accountRepository.findById(id);
+    public AccountEntity getAmount(int id) {
+        return accountRepository.findById(id).orElse(null);
     }
 
 }

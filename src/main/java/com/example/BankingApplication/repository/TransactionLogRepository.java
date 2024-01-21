@@ -9,8 +9,8 @@ import java.util.List;
 
 @Repository
 public interface TransactionLogRepository extends JpaRepository<TransactionLogEntity, Integer> {
-    TransactionLogEntity findByAccountId(AccountEntity id);
-    List<TransactionLogEntity> findTransactionLogByAccountId(AccountEntity id);
+    TransactionLogEntity findByAccountId(Integer id);
+    List<TransactionLogEntity> findTransactionLogByAccountId(Integer id);
 }
 
 

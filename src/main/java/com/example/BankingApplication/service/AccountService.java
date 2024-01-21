@@ -17,10 +17,9 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
-    public AccountEntity getAccountById(AccountEntity id) {
-        return accountRepository.findById(id);
+    public AccountEntity getAccountById(Integer id) {
+        return accountRepository.findById(id).orElse(null);
     }
-
     public void addAccount(AccountEntity account) {
         accountRepository.save(account);
     }

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -25,25 +27,28 @@ public class TransactionsController {
     AccountController accountController;
     @Autowired
     AccountService accountService;
-    TransactionLogEntity transactionLog;
-    LocalDateTime today = LocalDateTime.now();
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @PostMapping("/addNewAccount")
     public void addNewAccount(@RequestBody AccountEntity account) {
         accountController.addAccount(account);
     }
 
-    @PutMapping("/depositMoney/{accountId}")
-    public void depositMoney(@PathVariable AccountEntity accountId, Double transactionAmount) throws Exception {
+    @PutMapping("/test/{transactionAmount}")
+    public void depositMoneytest(@PathVariable("accountId") int accountId, @PathVariable("transactionAmount") Double transactionAmount) throws Exception {
+        System.out.println("test başarılı");
+    }
+
+        @PutMapping("/depositMoney/{accountId}/{transactionAmount}")
+    public void depositMoney(@PathVariable("accountId") int accountId, @PathVariable("transactionAmount") Double transactionAmount) throws Exception {
 
         AccountEntity account = accountService.getAccountById(accountId);
+        TransactionLogEntity transactionLog = new TransactionLogEntity();
 
         if (account != null) {
             if (transactionAmount >= 0) {
-                transactionLog.setAccountId(accountId.getId());
+                transactionLog.setAccountId(accountId);
                 transactionLog.setTransactionAmount(transactionAmount);
-                transactionLog.setTransactionDate(Date.valueOf(dtf.format(today)));
+                transactionLog.setTransactionDate(new Date(System.currentTimeMillis()));
                 transactionLog.setBankId(account.getBankId());
                 transactionLog.setTransactionType("Deposit Money");
                 Double totalAmount = account.getTotalAmount() + transactionAmount;
@@ -60,20 +65,21 @@ public class TransactionsController {
         }
     }
 
-    @PutMapping("/withdrawMoney/{accountId}")
-    public void withdrawMoney(@PathVariable AccountEntity accountId, Double transactionAmount) {
+    @PutMapping("/withdrawMoney/{accountId}/{transactionAmount}")
+    public void withdrawMoney(@PathVariable("accountId") int accountId, @PathVariable("transactionAmount") Double transactionAmount) {
 
         AccountEntity account = accountService.getAccountById(accountId);
+        TransactionLogEntity transactionLog = transactionLogService.getTransactionLogAccountId(accountId);
 
         if (account != null) {
             if (transactionAmount >= 0) {
-                transactionLog.setAccountId(accountId.getId());
+                transactionLog.setAccountId(accountId);
                 transactionLog.setTransactionAmount(transactionAmount);
-                transactionLog.setTransactionDate(Date.valueOf(dtf.format(today)));
+                transactionLog.setTransactionDate(new Date(System.currentTimeMillis()));
                 transactionLog.setBankId(account.getBankId());
-                transactionLog.setTransactionType("Deposit Money");
+                transactionLog.setTransactionType("Withdraw Money");
                 Double totalAmount = account.getTotalAmount() - transactionAmount;
-                if (totalAmount < 0) {
+                if (totalAmount > 0) {
                     transactionLog.setTotalAmount(totalAmount);
                     transactionLogService.addTransactionLog(transactionLog);
 
@@ -91,17 +97,17 @@ public class TransactionsController {
     }
 
     @GetMapping("/totalAmountQuery/{accountId}")
-    public AccountEntity totalAmountQuery(@PathVariable AccountEntity accountId) {
+    public AccountEntity totalAmountQuery(@PathVariable int accountId) {
         return transactionLogService.getAmount(accountId);
     }
 
-    @GetMapping("/TarihceSorgula/{id}")
-    public List<TransactionLogEntity> getTarihçeSorgula(@PathVariable AccountEntity id) {
+    @GetMapping("/history/{id}")
+    public List<TransactionLogEntity> history(@PathVariable int id) {
         return transactionLogService.getHistoryLog(id);
     }
 
-    @GetMapping("/TarihceSorgula")
-    public List<TransactionLogEntity> getTarihçeSorgulaAll() {
+    @GetMapping("/historyAll")
+    public List<TransactionLogEntity> historyAll() {
         return transactionLogService.getHistoryLogAll();
     }
 }
